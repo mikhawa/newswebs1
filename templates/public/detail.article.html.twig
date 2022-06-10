@@ -1,0 +1,32 @@
+{% extends 'public/public.template.html.twig' %}
+
+{% block title %}{{ parent() }} - {{ article.thearticletitle }}{% endblock %}
+
+{% block content %}
+
+
+    <div class="container">
+        <h1 class="mx-auto p-4">Page d'accueil <small class="text-muted">Nos 3 derniers articles</small></h1>
+        <div class="container">
+                    <h3>{{ article.thearticletitle }}</h3>
+                    <p>Nombre de commentaire : {{ article.thecommentIdthecomment.count }}   </p>
+                    <p>Rubrique : {% for rub in article.thesectionIdthesection %}
+                            <a href="./section/{{ rub.getThesectionslug }}">{{ rub.getThesectiontitle }}</a>
+                        {% endfor %}</p>
+                    <p>Ecrit par {{ article.theuserIdtheuser.theuserlogin }} le {{ article.thearticledate|date("d/m/Y à H:i") }}</p>
+                    <p>{{ article.thearticletext|raw|nl2br }}</p>
+            </div>
+        <div class="container">
+            {% for comments in article.thecommentIdthecomment %}
+                <h4>{{ comments.getTheuserIdtheuser.theuserlogin }} à {{ comments.thecommentdate|date("Y-m-d H:i:s") }}</h4>
+                <p>{{ comments.thecommenttext }}</p>
+            {% else %}
+            <h3 class="alert alert-danger">Pas encore de commentaire</h3></div>
+            {% endfor %}
+        </div>
+
+
+        </div>
+
+
+{% endblock %}

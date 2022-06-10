@@ -168,3 +168,6 @@ Création du `templates/public/public.template.html.twig` qui est enfant de `bas
 
 et donc `templates/public/index.html.twig` et nos autres pages publiques seront des enfants de ce template
 
+Pour les liens, on peut utiliser la méthode path pour afficher des liens internes dans notre site
+
+        <a href="{{ path('app_public_detail_article',{'slug':item.thearticleslug})  }}">

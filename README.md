@@ -132,3 +132,4 @@ On peut ensuite constater que la vue effectuera elle-même les requêtes suivant
         <p>{{ item.thearticleresume }} ... <a href="./article/{{ item.thearticleslug }}">Lire la suite</a></p>
         {% else %}
         {% endfor %}
+

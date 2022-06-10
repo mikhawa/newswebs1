@@ -1,26 +1,32 @@
-{% extends 'base.html.twig' %}
+{% extends 'public/public.template.html.twig' %}
 
 {% block title %}Hello PublicController!{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block content %}
 
-<div class="example-wrapper">
-    <h1>Homepage</h1>
-<h2>Derniers articles</h2>
-    {% for item in articles %}
-        <h3>{{ item.thearticletitle }}</h3>
-        <p>Nombre de commentaire : {{ item.thecommentIdthecomment.count }}   </p>
-        <p>Rubrique : {% for rub in item.thesectionIdthesection %}
-            <a href="./section/{{ rub.getThesectionslug }}">{{ rub.getThesectiontitle }}</a>
-            {% endfor %}</p>
-        <p>Ecrit par {{ item.theuserIdtheuser.theuserlogin }} le {{ item.thearticledate|date("d/m/Y à H:i") }}</p>
-        <p>{{ item.thearticleresume }} ... <a href="./article/{{ item.thearticleslug }}">Lire la suite</a></p>
-    {% else %}
-    {% endfor %}
 
-</div>
+    <div class="container">
+        <h1>Page d'accueil</h1>
+        <h2>Nos 3 derniers articles</h2>
+        <div class="row">
+
+                {% for item in articles %}
+            <div class="col-sm">
+                    <h3>{{ item.thearticletitle }}</h3>
+                    <p>Nombre de commentaire : {{ item.thecommentIdthecomment.count }}   </p>
+                    <p>Rubrique : {% for rub in item.thesectionIdthesection %}
+                            <a href="./section/{{ rub.getThesectionslug }}">{{ rub.getThesectiontitle }}</a>
+                        {% endfor %}</p>
+                    <p>Ecrit par {{ item.theuserIdtheuser.theuserlogin }} le {{ item.thearticledate|date("d/m/Y à H:i") }}</p>
+                    <p>{{ item.thearticleresume }} ... <a href="./article/{{ item.thearticleslug }}">Lire la suite</a></p>
+            </div>
+                {% else %}
+                    <h3 class="alert alert-danger">Pas encore d'article</h3></div>
+                {% endfor %}
+
+
+        </div>
+    </div>
+
+
 {% endblock %}

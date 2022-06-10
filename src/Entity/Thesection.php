@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\ThesectionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Thesection
  *
  * @ORM\Table(name="thesection", uniqueConstraints={@ORM\UniqueConstraint(name="thesectionslug_UNIQUE", columns={"thesectionslug"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=ThesectionRepository::class)
  */
 class Thesection
 {

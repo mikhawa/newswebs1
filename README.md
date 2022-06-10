@@ -96,3 +96,39 @@ On peut voir les vues ici :
         php bin/console debug:router
 
 
+Dans le fichier `src/Controller/PublicController.php`
+on va appeler les 3 derniers articles pour la homepage :
+
+        ...
+        // pour gérer les articles
+        use App\Entity\Thearticle;
+        // pour utiliser Doctrine
+        use Doctrine\ORM\EntityManagerInterface;
+        ...
+        class PublicController extends AbstractController
+        {
+            #[Route('/', name: 'app_public')]
+            public function index(EntityManagerInterface $entityManager): Response
+            {
+                // 3 derniers articles
+                $threeArticles = $entityManager->getRepository(Thearticle::class)->findBy(['thearticleactivate'=>1],['thearticledate'=>'DESC'],3);
+                return $this->render('public/index.html.twig', [
+                'articles' => $threeArticles,
+                ]);
+            }
+        }
+
+On peut ensuite constater que la vue effectuera elle-même les requêtes suivant ce que l'on veut afficher !
+
+        templates/public/index.html.twig
+        ...
+        {% for item in articles %}
+        <h3>{{ item.thearticletitle }}</h3>
+        <p>Nombre de commentaire : {{ item.thecommentIdthecomment.count }}   </p>
+        <p>Rubrique : {% for rub in item.thesectionIdthesection %}
+            <a href="./section/{{ rub.getThesectionslug }}">{{ rub.getThesectiontitle }}</a>
+            {% endfor %}</p>
+        <p>Ecrit par {{ item.theuserIdtheuser.theuserlogin }} le {{ item.thearticledate|date("d/m/Y à H:i") }}</p>
+        <p>{{ item.thearticleresume }} ... <a href="./article/{{ item.thearticleslug }}">Lire la suite</a></p>
+        {% else %}
+        {% endfor %}

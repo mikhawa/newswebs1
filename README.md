@@ -96,3 +96,8 @@ On peut voir les vues ici :
         php bin/console debug:router
 
 
+Dans le fichier `src/Controller/PublicController.php`
+on va appeler les 3 derniers articles pour la homepage :
+
+    
+

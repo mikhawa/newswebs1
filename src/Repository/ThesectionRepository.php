@@ -45,6 +45,38 @@ class ThesectionRepository extends ServiceEntityRepository
           ->getResult()
         ;
     }
+    public function SelectAllArticlesBySectionID(int $idsection): array{
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT 
+            a.idthearticle, a.thearticletitle, a.thearticleslug , a.thearticleresume, a.thearticledate,
+            u.idtheuser, u.theuserlogin,
+            (SELECT COUNT(thecomment_idthecomment) FROM thearticle_has_thecomment WHERE thearticle_idthearticle = a.idthearticle) AS nbcomment,
+            group_concat(s.thesectiontitle SEPARATOR '|||') AS thesectiontitle, 
+            group_concat(s.thesectionslug SEPARATOR '|||') AS thesectionslug
+                FROM thearticle a
+                # Jointure MANY TO ONE
+                INNER JOIN theuser u
+                    ON u.idtheuser = a.theuser_idtheuser 
+                # Many TO Many mais avec une CONDITION WHERE qui ne permet
+                # de garder qu'une seule rubrique AND sha.thesection_idthesection=
+            INNER JOIN thesection_has_thearticle sha
+                    ON sha.thearticle_idthearticle = a.idthearticle
+                # Many to Many sur 2 tables pour garder toutes les rubriques
+                INNER JOIN thesection_has_thearticle sha2
+                    ON sha2.thearticle_idthearticle = a.idthearticle
+                INNER JOIN thesection s
+                    ON sha2.thesection_idthesection = s.idthesection
+                # conditions : article validé, utilisateur actif et
+                # se trouver dans la section choisie
+                WHERE a.thearticleactivate=1
+        AND u.theuseractivate=1
+        AND sha.thesection_idthesection=:idsection
+                GROUP BY a.idthearticle
+                ORDER BY a.thearticledate DESC;";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['idsection' => $idsection]);
+        return $resultSet->fetchAllAssociative();
+    }
 
 //    /**
 //     * @return Thesection[] Returns an array of Thesection objects

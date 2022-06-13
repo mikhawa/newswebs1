@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PublicController extends AbstractController
 {
-    // ?
+    // Toutes les sections pour le menu de toutes les pages
     protected array $menu;
     public function __construct(EntityManagerInterface $entityManager){
        $this->menu = $entityManager->getRepository(Thesection::class)->selectAllSection();
@@ -23,13 +23,12 @@ class PublicController extends AbstractController
     #[Route('/', name: 'app_public')]
     public function index(EntityManagerInterface $entityManager): Response
     {
-        // on récupère toutes les sections
-        $sections = $this->menu;
+
         // 3 derniers articles
         $threeArticles = $entityManager->getRepository(Thearticle::class)->findBy(['thearticleactivate'=>1],['thearticledate'=>'DESC'],3);
         return $this->render('public/index.html.twig', [
             'articles' => $threeArticles,
-            'sections' => $sections,
+            'sections' => $this->menu,
         ]);
     }
 
@@ -58,6 +57,28 @@ class PublicController extends AbstractController
         return $this->render('public/detail.article.html.twig',[
             'article' => $article,
             'sections' => $this->menu,
+        ]);
+
+    }
+
+    #[Route('/section/{slug}', name: 'app_public_section')]
+    public function section(string $slug, EntityManagerInterface $entityManager): Response
+    {
+
+        // on récupère le détail de l'article via son slug
+        $section = $entityManager->getRepository(Thesection::class)->findOneBy(['thesectionslug'=>$slug]);
+
+        var_dump($section->getIdthesection());
+
+
+        $articles = $entityManager->getRepository(Thesection::class)->SelectAllArticlesBySectionId($section->getIdthesection());
+
+        var_dump($articles);
+
+        return $this->render('public/section.html.twig',[
+            'section' => $section,
+            'sections' => $this->menu,
+            'articles' => $articles,
         ]);
 
     }

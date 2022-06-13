@@ -68,12 +68,12 @@ class PublicController extends AbstractController
         // on récupère le détail de l'article via son slug
         $section = $entityManager->getRepository(Thesection::class)->findOneBy(['thesectionslug'=>$slug]);
 
-        var_dump($section->getIdthesection());
+        //var_dump($section->getIdthesection());
 
 
         $articles = $entityManager->getRepository(Thesection::class)->SelectAllArticlesBySectionId($section->getIdthesection());
 
-        var_dump($articles);
+        //var_dump($articles);
 
         return $this->render('public/section.html.twig',[
             'section' => $section,

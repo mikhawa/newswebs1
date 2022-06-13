@@ -1,16 +1,16 @@
 {% extends 'public/public.template.html.twig' %}
 
-{% block title %}{{ parent() }} - Accueil{% endblock %}
+{% block title %}{{ parent() }} - Tous nos articles{% endblock %}
 
 {% block content %}
 
 
     <div class="container">
-        <h1 class="mx-auto p-4">Page d'accueil <small class="text-muted">Nos 3 derniers articles</small></h1>
+        <h1 class="mx-auto p-4">Tous nos articles<br> <small class="text-muted">nous avons {{ articles|length }} articles</small></h1>
         <div class="row">
 
                 {% for item in articles %}
-            <div class="col-sm">
+            <div class="col-sm-4">
                     <h3>{{ item.thearticletitle }}</h3>
                     <p>Nombre de commentaire : {{ item.thecommentIdthecomment.count }}   </p>
                     <p>Rubrique : {% for rub in item.thesectionIdthesection %}

@@ -59,9 +59,9 @@ class Thearticle
     private $thearticledate = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var bool|null
+     * @var integer|null
      *
-     * @ORM\Column(name="thearticleactivate", type="boolean", nullable=true, options={"comment"="0 => waiting
+     * @ORM\Column(name="thearticleactivate", type="integer", nullable=true, options={"comment"="0 => waiting
 1 => publish
 2 => deleted"})
      */

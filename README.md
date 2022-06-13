@@ -133,3 +133,41 @@ On peut ensuite constater que la vue effectuera elle-même les requêtes suivant
         {% else %}
         {% endfor %}
 
+## Installation de template
+
+### nos JS et CSS
+
+Qui se trouve :
+
+        datas/startbootstrap-bare-gh-pages
+
+On va mettre les fichiers css et jss de ce template dans le dossier `asset`
+
+        assets/styles/styles.css
+        assets/js/scripts.js
+
+Et on va les charger dans `assets/app.js` :
+
+        // any CSS you import will output into a single css file (app.css in this case)
+        import './styles/app.css';
+        import './styles/styles.css';
+
+        // start the Stimulus application
+        import './bootstrap';
+
+        // import .js
+        import  './js/scripts.js';
+
+On doit ensuite recréer le `buil` avec npm, ce qui va créer nos fichiers frontend
+
+        npm run build
+
+### notre template
+
+Création du `templates/public/public.template.html.twig` qui est enfant de `base.html.twig`
+
+et donc `templates/public/index.html.twig` et nos autres pages publiques seront des enfants de ce template
+
+Pour les liens, on peut utiliser la méthode path pour afficher des liens internes dans notre site
+
+        <a href="{{ path('app_public_detail_article',{'slug':item.thearticleslug})  }}">

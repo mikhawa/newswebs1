@@ -14,7 +14,7 @@
                     <h3>{{ item.thearticletitle }}</h3>
                     <p>Nombre de commentaire : {{ item.thecommentIdthecomment.count }}   </p>
                     <p>Rubrique : {% for rub in item.thesectionIdthesection %}
-                            <a href="./section/{{ rub.getThesectionslug }}">{{ rub.getThesectiontitle }}</a>
+                            <a href="{{ path('app_public_section',{'slug':rub.getThesectionslug}) }}">{{ rub.getThesectiontitle }}</a>
                         {% endfor %}</p>
                     <p>Ecrit par {{ item.theuserIdtheuser.theuserlogin }} le {{ item.thearticledate|date("d/m/Y à H:i") }}</p>
                     <p>{{ item.thearticleresume }} ... <a href="{{ path('app_public_detail_article',{'slug':item.thearticleslug})  }}">Lire la suite</a></p>
